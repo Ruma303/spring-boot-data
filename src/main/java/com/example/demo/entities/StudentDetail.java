@@ -6,39 +6,52 @@ import jakarta.persistence.*;
 @Table(name = "student_details")
 public class StudentDetail {
 
-    @Id
-    @Column(name = "id_student", nullable = false)
-    private Integer idStudent;
+	@Id
+	@Column(name = "id_student", nullable = false)
+	private Integer idStudent;
 
-    @Column(name = "address", nullable = false, length = 200)
-    private String address;
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "id_student")
+	private Student student;
 
-    @Column(name = "phone", nullable = true, length = 20)
-    private String phone;
+	public Student getStudent() {
+		return student;
+	}
 
-    // Getters e Setters
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 
-    public Integer getIdStudent() {
-        return idStudent;
-    }
+	@Column(name = "address", nullable = false, length = 200)
+	private String address;
 
-    public void setIdStudent(Integer idStudent) {
-        this.idStudent = idStudent;
-    }
+	@Column(name = "phone", nullable = true, length = 20)
+	private String phone;
 
-    public String getAddress() {
-        return address;
-    }
+	// Getters e Setters
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public Integer getIdStudent() {
+		return idStudent;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setIdStudent(Integer idStudent) {
+		this.idStudent = idStudent;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }
