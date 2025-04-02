@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 @Entity
@@ -32,6 +33,8 @@ public class Student {
 	private Course course;
 	
 	@OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+	//@JsonManagedReference
+	@JsonIgnoreProperties("student") // ignora solo il campo inverso durante serializzazione
 	private StudentDetail studentDetail;
 
 	public StudentDetail getStudentDetail() {

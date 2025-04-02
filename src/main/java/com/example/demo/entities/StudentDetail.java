@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,8 @@ public class StudentDetail {
 	@OneToOne
 	@MapsId
 	@JoinColumn(name = "id_student")
+	//@JsonBackReference
+	//@JsonIgnore
 	private Student student;
 
 	public Student getStudent() {
