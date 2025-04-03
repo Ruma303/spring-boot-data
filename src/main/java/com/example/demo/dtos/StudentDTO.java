@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.example.demo.entities.Student;
 
-public record StudentDTO {
+public class StudentDTO {
 
 	private Integer id;
 	private String firstName;
