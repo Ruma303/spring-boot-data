@@ -21,6 +21,9 @@ public class Student {
 	@Column(name = "email", nullable = true, length = 200, unique = true)
 	private String email;
 	
+	@Column(name = "password", nullable = true, length = 200)
+	private String password;
+	
 	@Column(name = "age", nullable = true)
 	private Integer age;
 	
@@ -99,6 +102,14 @@ public class Student {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }
