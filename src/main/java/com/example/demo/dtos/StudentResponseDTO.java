@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.example.demo.entities.Student;
 
-public class StudentDTO {
+public class StudentResponseDTO {
 
 	private Integer id;
 	private String firstName;
@@ -14,11 +14,10 @@ public class StudentDTO {
 	private Date birthdate;
 	private String courseName;
 
-	// Costruttori
-	public StudentDTO() {}
+	public StudentResponseDTO() {}
 
-	public StudentDTO(Integer id, String firstName, String lastName, String email, Integer age, Date birthdate,
-			String courseName) {
+	public StudentResponseDTO(Integer id, String firstName, String lastName, String email, Integer age, Date birthdate,
+							  String courseName) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -28,20 +27,17 @@ public class StudentDTO {
 		this.courseName = courseName;
 	}
 
-	// Metodo per convertire un oggetto Student in StudentDTO
-	public static StudentDTO fromEntity(Student student) {
-		return new StudentDTO(
-				student.getId(), 
-				student.getFirstName(), 
-				student.getLastName(), 
+	public static StudentResponseDTO fromEntity(Student student) {
+		return new StudentResponseDTO(
+				student.getId(),
+				student.getFirstName(),
+				student.getLastName(),
 				student.getEmail(),
-				student.getAge(), 
+				student.getAge(),
 				student.getBirthdate(),
 				student.getCourse() != null ? student.getCourse().getCourseName() : null
-			);
+		);
 	}
-
-	// Getters e Setters
 
 	public Integer getId() {
 		return id;

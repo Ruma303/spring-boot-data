@@ -1,9 +1,23 @@
+### Git ignore file for Java projects ###
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 **/.DS_Store
+
+# File di log
+*.log
+*.out
+*.err
+
+# File temporanei del sistema operativo
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+Thumbs.db
 
 ### STS ###
 .apt_generated
@@ -32,3 +46,21 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Eclipse ###
+.classpath
+.project
+.settings/
+bin/
+
+### Gradle ###
+.gradle/
+build/
+
+### Maven ###
+target/
+
+# File di configurazione locali
+*.env
+*.local
+**/application-prod.*
