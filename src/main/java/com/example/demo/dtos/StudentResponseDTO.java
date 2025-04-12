@@ -15,8 +15,7 @@ public class StudentDTO {
 	private String courseName;
 
 	// Costruttori
-	public StudentDTO() {
-	}
+	public StudentDTO() {}
 
 	public StudentDTO(Integer id, String firstName, String lastName, String email, Integer age, Date birthdate,
 			String courseName) {
