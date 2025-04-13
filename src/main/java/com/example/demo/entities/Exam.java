@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,11 +14,13 @@ public class Exam {
     @Column(name = "id_exam", nullable = false)
     private Integer id;
 
-    @Column(name = "id_student", nullable = false)
-    private Integer idStudent;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_student", referencedColumnName = "id_student")
+    private Student student;
 
-    @Column(name = "id_subject", nullable = false)
-    private Integer idSubject;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_subject", referencedColumnName = "id_subject")
+    private Subject subject;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "exam_date", nullable = false)
@@ -36,22 +39,6 @@ public class Exam {
         this.id = id;
     }
 
-    public Integer getIdStudent() {
-        return idStudent;
-    }
-
-    public void setIdStudent(Integer idStudent) {
-        this.idStudent = idStudent;
-    }
-
-    public Integer getIdSubject() {
-        return idSubject;
-    }
-
-    public void setIdSubject(Integer idSubject) {
-        this.idSubject = idSubject;
-    }
-
     public Date getExamDate() {
         return examDate;
     }
@@ -66,5 +53,21 @@ public class Exam {
 
     public void setGrade(BigDecimal grade) {
         this.grade = grade;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }
