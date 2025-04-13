@@ -7,16 +7,16 @@ import jakarta.persistence.*;
 @Table(name = "student_details")
 public class StudentDetail {
 
-	@Id
-	@Column(name = "id_student", nullable = false)
-	private Integer idStudent;
-
 	@OneToOne
 	@MapsId
 	@JoinColumn(name = "id_student")
 	//@JsonBackReference
 	//@JsonIgnore
 	private Student student;
+
+	@Id
+	@Column(name = "id_student", nullable = false)
+	private Integer idStudent;
 
 	public Student getStudent() {
 		return student;

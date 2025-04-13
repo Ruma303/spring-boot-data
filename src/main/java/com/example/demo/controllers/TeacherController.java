@@ -1,12 +1,17 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.TeacherRequestDTO;
+import com.example.demo.dtos.TeacherResponseDTO;
 import com.example.demo.entities.Teacher;
 import com.example.demo.repositories.TeacherRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/teachers")
@@ -15,36 +20,77 @@ public class TeacherController {
     @Autowired
     private TeacherRepository teacherRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping
-    public List<Teacher> findAll() {
-        return teacherRepository.findAll();
+    public List<TeacherResponseDTO> findAll() {
+        return teacherRepository.findAll().stream()
+                .map(teacher -> modelMapper.map(teacher, TeacherResponseDTO.class))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Optional<Teacher> findById(@PathVariable Integer id) {
-        return teacherRepository.findById(id);
+    public ResponseEntity<TeacherResponseDTO> findById(@PathVariable Integer id) {
+        return teacherRepository.findById(id)
+                .map(teacher -> modelMapper.map(teacher, TeacherResponseDTO.class))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/lastname/{lastName}")
-    public List<Teacher> findByLastName(@PathVariable String lastName) {
-        return teacherRepository.findByLastName(lastName);
+    public List<TeacherResponseDTO> findByLastName(@PathVariable String lastName) {
+        return teacherRepository.findByLastName(lastName).stream()
+                .map(teacher -> modelMapper.map(teacher, TeacherResponseDTO.class))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/fullname")
-    public List<Teacher> findByFullName(
+    public List<TeacherResponseDTO> findByFullName(
             @RequestParam String firstName,
             @RequestParam String lastName
     ) {
-        return teacherRepository.findByFirstNameAndLastName(firstName, lastName);
+        return teacherRepository.findByFirstNameAndLastName(firstName, lastName).stream()
+                .map(teacher -> modelMapper.map(teacher, TeacherResponseDTO.class))
+                .collect(Collectors.toList());
     }
 
     @PostMapping
-    public Teacher save(@RequestBody Teacher teacher) {
-        return teacherRepository.save(teacher);
+    public ResponseEntity<TeacherResponseDTO> save(@RequestBody TeacherRequestDTO dto) {
+        Teacher teacher = modelMapper.map(dto, Teacher.class);
+        Teacher saved = teacherRepository.save(teacher);
+        TeacherResponseDTO response = modelMapper.map(saved, TeacherResponseDTO.class);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeacherResponseDTO> update(
+            @PathVariable Integer id,
+            @RequestBody TeacherRequestDTO dto
+    ) {
+        Optional<Teacher> existingOpt = teacherRepository.findById(id);
+        if (existingOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Teacher existing = existingOpt.get();
+        // Aggiorna solo i campi consentiti
+        existing.setFirstName(dto.getFirstName());
+        existing.setLastName(dto.getLastName());
+        existing.setEmail(dto.getEmail());
+        existing.setPassword(dto.getPassword());
+
+        Teacher updated = teacherRepository.save(existing);
+        TeacherResponseDTO response = modelMapper.map(updated, TeacherResponseDTO.class);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        if (!teacherRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
         teacherRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
