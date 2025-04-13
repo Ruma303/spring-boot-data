@@ -1,6 +1,9 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dtos.ExamResponseDTO;
+import com.example.demo.dtos.PageWrapper;
 import com.example.demo.entities.Exam;
+import com.example.demo.mappers.ExamMapper;
 import com.example.demo.services.ExamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -16,17 +19,21 @@ import java.util.List;
 public class ExamController {
 
     private final ExamService examService;
+    private final ExamMapper examMapper;
 
     @GetMapping
-    public ResponseEntity<Page<Exam>> findAll(
+    public ResponseEntity<PageWrapper<ExamResponseDTO>> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "examDate,desc") String[] sort
     ) {
         Sort sortOrder = Sort.by(Sort.Direction.fromString(sort[1]), sort[0]);
         Pageable pageable = PageRequest.of(page, size, sortOrder);
+
         Page<Exam> result = examService.findAll(pageable);
-        return ResponseEntity.ok(result);
+        Page<ExamResponseDTO> mapped = result.map(examMapper::toDTO);
+
+        return ResponseEntity.ok(new PageWrapper<>(mapped));
     }
 
     @GetMapping("/{id}")
