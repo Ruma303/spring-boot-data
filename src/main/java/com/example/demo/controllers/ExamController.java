@@ -2,7 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Exam;
 import com.example.demo.services.ExamService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/exams")
+@RequiredArgsConstructor
 public class ExamController {
 
-    @Autowired
-    private ExamService examService;
+    private final ExamService examService;
 
     @GetMapping
     public ResponseEntity<Page<Exam>> findAll(

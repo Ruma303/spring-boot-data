@@ -3,7 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dtos.StudentRequestDTO;
 import com.example.demo.dtos.StudentResponseDTO;
 import com.example.demo.services.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
+@RequiredArgsConstructor
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
     @GetMapping
     public List<StudentResponseDTO> findAll() {

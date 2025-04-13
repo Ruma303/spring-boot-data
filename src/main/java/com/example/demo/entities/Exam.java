@@ -1,12 +1,18 @@
 package com.example.demo.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "exams")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Exam {
 
     @Id
@@ -28,46 +34,4 @@ public class Exam {
 
     @Column(name = "grade", precision = 3, scale = 1)
     private BigDecimal grade;
-
-    // Getters e Setters
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getExamDate() {
-        return examDate;
-    }
-
-    public void setExamDate(Date examDate) {
-        this.examDate = examDate;
-    }
-
-    public BigDecimal getGrade() {
-        return grade;
-    }
-
-    public void setGrade(BigDecimal grade) {
-        this.grade = grade;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
 }

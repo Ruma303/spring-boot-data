@@ -2,7 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Course;
 import com.example.demo.repositories.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,10 +10,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/courses")
+@RequiredArgsConstructor
 public class CourseController {
 
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     @GetMapping
     public List<Course> findAll() {

@@ -1,5 +1,8 @@
 package com.example.demo.entities;
 
+import lombok.Getter;
+
+@Getter
 public enum StudentStatus {
     ACTIVE,
     INACTIVE,

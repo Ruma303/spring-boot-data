@@ -6,8 +6,8 @@ import com.example.demo.entities.Course;
 import com.example.demo.entities.Student;
 import com.example.demo.repositories.CourseRepository;
 import com.example.demo.repositories.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,18 +15,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository, ModelMapper modelMapper) {
-        this.studentRepository = studentRepository;
-        this.courseRepository = courseRepository;
-        this.modelMapper = modelMapper;
-    }
 
     @Override
     public List<StudentResponseDTO> findAll() {

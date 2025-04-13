@@ -7,15 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class TeacherMapping {
 
     private final ModelMapper modelMapper;
-
-    public TeacherMapping(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
 
     @PostConstruct
     public void configure() {

@@ -4,8 +4,8 @@ import com.example.demo.dtos.TeacherRequestDTO;
 import com.example.demo.dtos.TeacherResponseDTO;
 import com.example.demo.entities.Teacher;
 import com.example.demo.repositories.TeacherRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +15,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/teachers")
+@RequiredArgsConstructor
 public class TeacherController {
 
-    @Autowired
-    private TeacherRepository teacherRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    private final TeacherRepository teacherRepository;
+    private final ModelMapper modelMapper;
 
     @GetMapping
     public List<TeacherResponseDTO> findAll() {

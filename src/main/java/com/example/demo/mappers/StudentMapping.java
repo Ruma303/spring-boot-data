@@ -10,15 +10,13 @@ import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class StudentMapping {
 
     private final ModelMapper modelMapper;
-
-    public StudentMapping(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-    }
 
     @PostConstruct
     public void configure() {

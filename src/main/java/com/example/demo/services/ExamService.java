@@ -6,7 +6,7 @@ import com.example.demo.entities.Subject;
 import com.example.demo.repositories.ExamRepository;
 import com.example.demo.repositories.StudentRepository;
 import com.example.demo.repositories.SubjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,22 +17,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ExamService {
 
     private final ExamRepository examRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
-
-    @Autowired
-    public ExamService(
-            ExamRepository examRepository,
-            StudentRepository studentRepository,
-            SubjectRepository subjectRepository
-    ) {
-        this.examRepository = examRepository;
-        this.studentRepository = studentRepository;
-        this.subjectRepository = subjectRepository;
-    }
 
     public Page<Exam> findAll(Pageable pageable) {
         return examRepository.findAll(pageable);

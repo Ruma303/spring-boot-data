@@ -2,7 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Subject;
 import com.example.demo.repositories.SubjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,10 +10,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/subjects")
+@RequiredArgsConstructor
 public class SubjectController {
 
-    @Autowired
-    private SubjectRepository subjectRepository;
+    private final SubjectRepository subjectRepository;
 
     @GetMapping
     public List<Subject> findAll() {

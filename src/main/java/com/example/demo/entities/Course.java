@@ -1,9 +1,15 @@
 package com.example.demo.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "courses")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Course {
 
     @Id
@@ -13,22 +19,4 @@ public class Course {
 
     @Column(name = "course_name", nullable = false, unique = true, length = 100)
     private String courseName;
-
-    // Getters e Setters
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
 }
