@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dtos.ExamResponseDTO;
-import com.example.demo.dtos.PageWrapper;
+import com.example.demo.wrappers.PageWrapper;
 import com.example.demo.entities.Exam;
 import com.example.demo.mappers.ExamMapper;
 import com.example.demo.services.ExamService;

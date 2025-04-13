@@ -1,4 +1,4 @@
-package com.example.demo.dtos;
+package com.example.demo.wrappers;
 
 import lombok.Getter;
 import org.springframework.data.domain.Page;
