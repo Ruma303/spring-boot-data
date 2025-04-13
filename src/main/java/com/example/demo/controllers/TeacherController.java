@@ -74,11 +74,7 @@ public class TeacherController {
         }
 
         Teacher existing = existingOpt.get();
-        // Aggiorna solo i campi consentiti
-        existing.setFirstName(dto.getFirstName());
-        existing.setLastName(dto.getLastName());
-        existing.setEmail(dto.getEmail());
-        existing.setPassword(dto.getPassword());
+        modelMapper.map(dto, existing); // aggiorna i campi usando il mapping già configurato
 
         Teacher updated = teacherRepository.save(existing);
         TeacherResponseDTO response = modelMapper.map(updated, TeacherResponseDTO.class);

@@ -1,51 +1,15 @@
 package com.example.demo.dtos;
 
-import java.util.Date;
-
-import com.example.demo.entities.Student;
-
 public class StudentResponseDTO {
 
-	private Integer id;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Integer age;
-	private Date birthdate;
 	private String courseName;
+	private String birthdateFormatted;
+	private String statusLabel;
 
 	public StudentResponseDTO() {}
-
-	public StudentResponseDTO(Integer id, String firstName, String lastName, String email, Integer age, Date birthdate,
-							  String courseName) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.age = age;
-		this.birthdate = birthdate;
-		this.courseName = courseName;
-	}
-
-	public static StudentResponseDTO fromEntity(Student student) {
-		return new StudentResponseDTO(
-				student.getId(),
-				student.getFirstName(),
-				student.getLastName(),
-				student.getEmail(),
-				student.getAge(),
-				student.getBirthdate(),
-				student.getCourse() != null ? student.getCourse().getCourseName() : null
-		);
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -71,27 +35,27 @@ public class StudentResponseDTO {
 		this.email = email;
 	}
 
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public Date getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
-	}
-
 	public String getCourseName() {
 		return courseName;
 	}
 
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
+	}
+
+	public String getBirthdateFormatted() {
+		return birthdateFormatted;
+	}
+
+	public void setBirthdateFormatted(String birthdateFormatted) {
+		this.birthdateFormatted = birthdateFormatted;
+	}
+
+	public String getStatusLabel() {
+		return statusLabel;
+	}
+
+	public void setStatusLabel(String statusLabel) {
+		this.statusLabel = statusLabel;
 	}
 }

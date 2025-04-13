@@ -30,6 +30,17 @@ public class Student {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "birthdate", nullable = true)
 	private java.util.Date birthdate;
+
+	public StudentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(StudentStatus status) {
+		this.status = status;
+	}
+
+	@Enumerated(EnumType.STRING)
+	private StudentStatus status;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_course", referencedColumnName = "id_course")

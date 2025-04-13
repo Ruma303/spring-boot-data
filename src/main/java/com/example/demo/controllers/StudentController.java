@@ -65,13 +65,7 @@ public class StudentController {
             return ResponseEntity.badRequest().build();
         }
 
-        Student student = new Student();
-        student.setFirstName(dto.getFirstName());
-        student.setLastName(dto.getLastName());
-        student.setEmail(dto.getEmail());
-        student.setPassword(dto.getPassword());
-        student.setAge(dto.getAge());
-        student.setBirthdate(dto.getBirthdate());
+        Student student = modelMapper.map(dto, Student.class);
         student.setCourse(courseOpt.get());
 
         Student saved = studentRepository.save(student);
@@ -87,12 +81,7 @@ public class StudentController {
 
         return studentRepository.findById(id)
                 .map(existing -> {
-                    existing.setFirstName(dto.getFirstName());
-                    existing.setLastName(dto.getLastName());
-                    existing.setEmail(dto.getEmail());
-                    existing.setPassword(dto.getPassword());
-                    existing.setAge(dto.getAge());
-                    existing.setBirthdate(dto.getBirthdate());
+                    modelMapper.map(dto, existing);
                     existing.setCourse(courseOpt.get());
                     Student updated = studentRepository.save(existing);
                     return ResponseEntity.ok(modelMapper.map(updated, StudentResponseDTO.class));
@@ -101,7 +90,11 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        if (!studentRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
         studentRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
