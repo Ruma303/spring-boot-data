@@ -3,7 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dtos.ExamResponseDTO;
 import com.example.demo.wrappers.PageWrapper;
 import com.example.demo.entities.Exam;
-import com.example.demo.mappers.ExamMapper;
+import com.example.demo.mappers.ExamMapping;
 import com.example.demo.services.ExamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ExamController {
 
     private final ExamService examService;
-    private final ExamMapper examMapper;
+    private final ExamMapping examMapping;
 
     @GetMapping
     public ResponseEntity<PageWrapper<ExamResponseDTO>> findAll(
@@ -31,7 +31,7 @@ public class ExamController {
         Pageable pageable = PageRequest.of(page, size, sortOrder);
 
         Page<Exam> result = examService.findAll(pageable);
-        Page<ExamResponseDTO> mapped = result.map(examMapper::toDTO);
+        Page<ExamResponseDTO> mapped = result.map(examMapping::toDTO);
 
         return ResponseEntity.ok(new PageWrapper<>(mapped));
     }

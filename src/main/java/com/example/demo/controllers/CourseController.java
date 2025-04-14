@@ -1,42 +1,50 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.Course;
-import com.example.demo.repositories.CourseRepository;
+import com.example.demo.dtos.CourseRequestDTO;
+import com.example.demo.dtos.CourseResponseDTO;
+import com.example.demo.services.CourseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/courses")
 @RequiredArgsConstructor
 public class CourseController {
 
-    private final CourseRepository courseRepository;
+    private final CourseService courseService;
 
     @GetMapping
-    public List<Course> findAll() {
-        return courseRepository.findAll();
+    public List<CourseResponseDTO> findAll() {
+        return courseService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Course> findById(@PathVariable Integer id) {
-        return courseRepository.findById(id);
+    public ResponseEntity<CourseResponseDTO> findById(@PathVariable Integer id) {
+        return courseService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/name/{name}")
-    public Optional<Course> findByCourseName(@PathVariable String name) {
-        return courseRepository.findByCourseName(name);
+    public ResponseEntity<CourseResponseDTO> findByCourseName(@PathVariable String name) {
+        return courseService.findByCourseName(name)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Course save(@RequestBody Course course) {
-        return courseRepository.save(course);
+    public ResponseEntity<CourseResponseDTO> save(@Valid @RequestBody CourseRequestDTO dto) {
+        CourseResponseDTO saved = courseService.save(dto);
+        return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Integer id) {
-        courseRepository.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        courseService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ExamMapper {
+public class ExamMapping {
 
     public ExamResponseDTO toDTO(Exam exam) {
         ExamResponseDTO dto = new ExamResponseDTO();

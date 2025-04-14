@@ -1,56 +1,48 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dtos.SubjectRequestDTO;
-import com.example.demo.entities.Subject;
-import com.example.demo.repositories.SubjectRepository;
+import com.example.demo.dtos.SubjectResponseDTO;
+import com.example.demo.services.SubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/subjects")
 @RequiredArgsConstructor
 public class SubjectController {
 
-    private final SubjectRepository subjectRepository;
+    private final SubjectService subjectService;
 
     @GetMapping
-    public List<Subject> findAll() {
-        return subjectRepository.findAll();
+    public List<SubjectResponseDTO> findAll() {
+        return subjectService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Subject> findById(@PathVariable Integer id) {
-        return subjectRepository.findById(id)
+    public ResponseEntity<SubjectResponseDTO> findById(@PathVariable Integer id) {
+        return subjectService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/teacher/{teacherId}")
-    public List<Subject> findByTeacherId(@PathVariable Integer teacherId) {
-        return subjectRepository.findByTeacherId(teacherId);
+    public List<SubjectResponseDTO> findByTeacherId(@PathVariable Integer teacherId) {
+        return subjectService.findByTeacherId(teacherId);
     }
 
     @PostMapping
-    public ResponseEntity<Subject> save(@Valid @RequestBody SubjectRequestDTO dto) {
-        Subject subject = new Subject();
-        subject.setSubjectName(dto.getSubjectName());
-        subject.setIdTeacher(dto.getIdTeacher());
-
-        Subject saved = subjectRepository.save(subject);
+    public ResponseEntity<SubjectResponseDTO> save(@Valid @RequestBody SubjectRequestDTO dto) {
+        SubjectResponseDTO saved = subjectService.save(dto);
         return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
-        if (!subjectRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        subjectRepository.deleteById(id);
+        subjectService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
