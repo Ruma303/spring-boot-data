@@ -3,12 +3,12 @@ package com.example.demo.controllers;
 import com.example.demo.dtos.StudentRequestDTO;
 import com.example.demo.dtos.StudentResponseDTO;
 import com.example.demo.services.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
@@ -41,14 +41,14 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<StudentResponseDTO> save(@RequestBody StudentRequestDTO dto) {
+    public ResponseEntity<StudentResponseDTO> save(@Valid @RequestBody StudentRequestDTO dto) {
         return studentService.save(dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> update(@PathVariable Integer id, @RequestBody StudentRequestDTO dto) {
+    public ResponseEntity<StudentResponseDTO> update(@PathVariable Integer id, @Valid @RequestBody StudentRequestDTO dto) {
         return studentService.update(id, dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());

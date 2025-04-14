@@ -4,6 +4,7 @@ import com.example.demo.dtos.TeacherRequestDTO;
 import com.example.demo.dtos.TeacherResponseDTO;
 import com.example.demo.entities.Teacher;
 import com.example.demo.repositories.TeacherRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class TeacherController {
     }
 
     @PostMapping
-    public ResponseEntity<TeacherResponseDTO> save(@RequestBody TeacherRequestDTO dto) {
+    public ResponseEntity<TeacherResponseDTO> save(@Valid @RequestBody TeacherRequestDTO dto) {
         Teacher teacher = modelMapper.map(dto, Teacher.class);
         Teacher saved = teacherRepository.save(teacher);
         TeacherResponseDTO response = modelMapper.map(saved, TeacherResponseDTO.class);
@@ -64,7 +65,7 @@ public class TeacherController {
     @PutMapping("/{id}")
     public ResponseEntity<TeacherResponseDTO> update(
             @PathVariable Integer id,
-            @RequestBody TeacherRequestDTO dto
+            @Valid @RequestBody TeacherRequestDTO dto
     ) {
         Optional<Teacher> existingOpt = teacherRepository.findById(id);
         if (existingOpt.isEmpty()) {
@@ -72,8 +73,7 @@ public class TeacherController {
         }
 
         Teacher existing = existingOpt.get();
-        modelMapper.map(dto, existing); // aggiorna i campi usando il mapping già configurato
-
+        modelMapper.map(dto, existing);
         Teacher updated = teacherRepository.save(existing);
         TeacherResponseDTO response = modelMapper.map(updated, TeacherResponseDTO.class);
         return ResponseEntity.ok(response);
