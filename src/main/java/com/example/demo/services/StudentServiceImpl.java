@@ -4,6 +4,7 @@ import com.example.demo.dtos.StudentRequestDTO;
 import com.example.demo.dtos.StudentResponseDTO;
 import com.example.demo.entities.Course;
 import com.example.demo.entities.Student;
+import com.example.demo.entities.StudentDetail;
 import com.example.demo.repositories.CourseRepository;
 import com.example.demo.repositories.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,12 @@ public class StudentServiceImpl implements StudentService {
         Student student = modelMapper.map(dto, Student.class);
         student.setCourse(courseOpt.get());
 
+        if (dto.getStudentDetail() != null) {
+            StudentDetail detail = modelMapper.map(dto.getStudentDetail(), StudentDetail.class);
+            detail.setStudent(student);
+            student.setStudentDetail(detail);
+        }
+
         Student saved = studentRepository.save(student);
         return Optional.of(modelMapper.map(saved, StudentResponseDTO.class));
     }
@@ -74,6 +81,16 @@ public class StudentServiceImpl implements StudentService {
         Student existing = existingOpt.get();
         modelMapper.map(dto, existing);
         existing.setCourse(courseOpt.get());
+
+        if (dto.getStudentDetail() != null) {
+            if (existing.getStudentDetail() != null) {
+                modelMapper.map(dto.getStudentDetail(), existing.getStudentDetail());
+            } else {
+                StudentDetail detail = modelMapper.map(dto.getStudentDetail(), StudentDetail.class);
+                detail.setStudent(existing);
+                existing.setStudentDetail(detail);
+            }
+        }
 
         Student updated = studentRepository.save(existing);
         return Optional.of(modelMapper.map(updated, StudentResponseDTO.class));

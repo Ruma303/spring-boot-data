@@ -1,9 +1,12 @@
 package com.example.demo.mappers;
 
+import com.example.demo.dtos.StudentDetailRequestDTO;
+import com.example.demo.dtos.StudentDetailResponseDTO;
 import com.example.demo.dtos.StudentResponseDTO;
 import com.example.demo.entities.Student;
 import com.example.demo.converters.DateConverter;
 import com.example.demo.converters.EnumConverter;
+import com.example.demo.entities.StudentDetail;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.modelmapper.PropertyMap;
@@ -21,14 +24,12 @@ public class StudentMapping {
     @PostConstruct
     public void configure() {
 
-        // TypeMap: mappatura personalizzata per Course.courseName → courseName
-        TypeMap<Student, StudentResponseDTO> typeMap = modelMapper.createTypeMap(Student.class, StudentResponseDTO.class);
-        typeMap.addMappings(mapper -> {
-            mapper.map(src -> src.getCourse().getCourseName(), StudentResponseDTO::setCourseName);
-        });
+        modelMapper.createTypeMap(Student.class, StudentResponseDTO.class)
+                .addMappings(mapper -> {
+                    mapper.map(src -> src.getCourse().getCourseName(), StudentResponseDTO::setCourseName);
+                });
 
-        // PropertyMap: dichiarata con generics espliciti
-        PropertyMap<Student, StudentResponseDTO> propertyMap = new PropertyMap<Student, StudentResponseDTO>() {
+        PropertyMap<Student, StudentResponseDTO> propertyMap = new PropertyMap<>() {
             @Override
             protected void configure() {
                 using(DateConverter.localDateToString)
@@ -44,5 +45,9 @@ public class StudentMapping {
         };
 
         modelMapper.addMappings(propertyMap);
+
+        // Mapping per StudentDetail
+        modelMapper.createTypeMap(StudentDetailRequestDTO.class, StudentDetail.class);
+        modelMapper.createTypeMap(StudentDetail.class, StudentDetailResponseDTO.class);
     }
 }

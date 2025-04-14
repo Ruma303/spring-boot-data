@@ -46,7 +46,14 @@ public class Student {
     @JoinColumn(name = "id_course", referencedColumnName = "id_course")
     private Course course;
 
-    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("student")
     private StudentDetail studentDetail;
+
+    public void setStudentDetail(StudentDetail detail) {
+        this.studentDetail = detail;
+        if (detail != null) {
+            detail.setStudent(this);
+        }
+    }
 }

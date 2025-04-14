@@ -15,4 +15,6 @@ public class StudentResponseDTO {
     private String courseName;
     private String birthdateFormatted;
     private String statusLabel;
+
+    private StudentDetailResponseDTO studentDetail;
 }

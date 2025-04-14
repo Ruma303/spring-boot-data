@@ -2,6 +2,7 @@ package com.example.demo.dtos;
 
 import com.example.demo.entities.Course;
 import com.example.demo.entities.Student;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,6 +42,9 @@ public class StudentRequestDTO {
 
     @NotNull(message = "Il corso è obbligatorio")
     private Integer courseId;
+
+    @Valid
+    private StudentDetailRequestDTO studentDetail;
 
     public Student toEntity(Course course) {
         Student student = new Student();

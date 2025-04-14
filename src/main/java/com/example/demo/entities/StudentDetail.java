@@ -27,4 +27,7 @@ public class StudentDetail {
 
     @Column(name = "phone", nullable = true, length = 20)
     private String phone;
+
+    @Column(name = "tax_code", nullable = true, length = 20)
+    private String taxCode;
 }
