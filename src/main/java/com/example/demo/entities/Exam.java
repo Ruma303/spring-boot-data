@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.example.demo.models.AuditMetadata;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
